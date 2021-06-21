@@ -13,3 +13,18 @@ btn.addEventListener("click", () => {
     messague: messague.value,
   });
 });
+
+messague.addEventListener("keypress", () => {
+  socket.emit("Chat:typing", {
+    username: username.value,
+  });
+});
+
+socket.on("Chat:message", (data) => {
+  actions.innerHTML = "";
+  output.innerHTML += `<p><strong>${data.username}: </strong><span>${data.messague} </span></p>`;
+});
+
+socket.on("Chat:typing", (data) => {
+  actions.innerHTML = `<p><strong>${data.username} typing </strong></p>`;
+});

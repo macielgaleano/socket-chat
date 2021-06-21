@@ -14,6 +14,9 @@ const io = SocketIO(server);
 io.on("connection", (socket) => {
   console.log(`new connection`, socket.id);
   socket.on("Chat:message", (data) => {
-    console.log(data);
+    io.sockets.emit("Chat:message", data);
+  });
+  socket.on("Chat:typing", (data) => {
+    socket.broadcast.emit("Chat:typing", data);
   });
 });
